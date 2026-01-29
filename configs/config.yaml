@@ -1,0 +1,51 @@
+# @package _global_
+defaults:
+  - model: pointnet
+  - data: modelnet40
+  - training: default
+  - _self_
+
+# Experiment settings
+experiment_name: "3d_point_cloud_processing"
+seed: 42
+device: "auto"  # auto-detect: cuda -> mps -> cpu
+
+# Paths
+data_dir: "data"
+checkpoint_dir: "checkpoints"
+log_dir: "logs"
+assets_dir: "assets"
+
+# Model settings
+model:
+  num_classes: 40
+  dropout: 0.3
+  use_bn: true
+
+# Data settings
+data:
+  batch_size: 32
+  num_workers: 4
+  num_points: 1024
+  augment: true
+
+# Training settings
+training:
+  epochs: 200
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  scheduler: "cosine"
+  warmup_epochs: 10
+
+# Evaluation settings
+evaluation:
+  metrics: ["accuracy", "f1", "precision", "recall"]
+  save_predictions: true
+
+# Logging
+logging:
+  log_every_n_steps: 50
+  val_check_interval: 1.0
+  save_top_k: 3
+  monitor: "val_accuracy"
+  mode: "max"
